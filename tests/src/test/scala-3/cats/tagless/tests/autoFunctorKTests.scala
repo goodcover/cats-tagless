@@ -43,10 +43,11 @@ import cats.free.Free
 import cats.laws.discipline.SerializableTests
 import cats.tagless.laws.discipline.FunctorKTests
 
+import scala.annotation.experimental
 import scala.annotation.nowarn
 import scala.util.Try
 
-class autoFunctorKTests extends CatsTaglessTestSuite:
+@experimental class autoFunctorKTests extends CatsTaglessTestSuite:
   import autoFunctorKTests.*
 
   checkAll("FunctorK[SafeAlg]", FunctorKTests[SafeAlg].functorK[Try, Option, List, Int])

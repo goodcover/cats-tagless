@@ -26,9 +26,10 @@ import cats.{Eq, Eval, Monoid, ~>}
 import org.scalacheck.{Arbitrary, Cogen}
 
 import scala.util.Try
+import scala.annotation.experimental
 
 // TODO: @finalAlg @autoProductNK @autoInstrument
-trait SafeAlg[F[_]] derives FunctorK: // , SemigroupalK:
+@experimental trait SafeAlg[F[_]] derives FunctorK: // , SemigroupalK:
   def parseInt(str: String): F[Int]
   def divide(dividend: Float, divisor: Float): F[Float]
 
@@ -135,7 +136,7 @@ object KVStoreInfo:
     (a, b) => KVStoreInfo(a.queries |+| b.queries, a.cache |+| b.cache)
   )
 
-object Interpreters:
+@experimental object Interpreters:
   implicit object tryInterpreter extends SafeAlg[Try]:
     def parseInt(str: String): Try[Int] = Try(str.toInt)
     def divide(dividend: Float, divisor: Float): Try[Float] = Try(dividend / divisor)
