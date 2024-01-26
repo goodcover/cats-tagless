@@ -20,9 +20,7 @@ import cats.tagless.*
 import cats.Id
 import cats.data.Cokleisli
 
-import scala.annotation.experimental
-
-@experimental trait Fixtures:
+trait Fixtures:
   /** Simple algebra definition */
   trait SimpleService[F[_]] derives FunctorK:
     def id(): F[Int]

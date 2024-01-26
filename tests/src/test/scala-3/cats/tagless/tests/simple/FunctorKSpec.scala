@@ -23,10 +23,9 @@ import cats.tagless.macros.*
 import cats.Id
 import cats.arrow.FunctionK
 
-import scala.annotation.experimental
 import scala.compiletime.testing.*
 
-@experimental class FunctorKSpec extends munit.FunSuite with Fixtures:
+class FunctorKSpec extends munit.FunSuite with Fixtures:
 
   test("DeriveMacro should derive instance for a simple algebra") {
     val functorK = Derive.functorK[SimpleService]
