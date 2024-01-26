@@ -1,6 +1,5 @@
 addCommandAlias("validateJVM", "all scalafmtCheckAll scalafmtSbtCheck testsJVM/test")
 addCommandAlias("validateJS", "all testsJS/test")
-addCommandAlias("validateNative", "all testsNative/test")
 addCommandAlias("fmt", "all scalafmtSbt scalafmtAll")
 addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheckAll")
 
@@ -49,12 +48,10 @@ lazy val root = tlCrossRootProject.aggregate(core, fs2, laws, tests, macros, exa
 
 lazy val coreJVM = core.jvm
 lazy val coreJS = core.js
-lazy val coreNative = core.native
-lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
+lazy val core = crossProject(JVMPlatform, JSPlatform)
   .crossType(CrossType.Pure)
   .enablePlugins(AutomateHeaderPlugin)
   .jsSettings(commonJsSettings)
-  .nativeSettings(commonNativeSettings)
   .settings(rootSettings)
   .settings(
     moduleName := "cats-tagless-core",
@@ -65,13 +62,11 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
 
 lazy val fs2JVM = fs2.jvm
 lazy val fs2JS = fs2.js
-lazy val fs2Native = fs2.native
-lazy val fs2 = crossProject(JVMPlatform, JSPlatform, NativePlatform)
+lazy val fs2 = crossProject(JVMPlatform, JSPlatform)
   .crossType(CrossType.Pure)
   .dependsOn(core)
   .enablePlugins(AutomateHeaderPlugin)
   .jsSettings(commonJsSettings)
-  .nativeSettings(commonNativeSettings)
   .settings(rootSettings)
   .settings(
     moduleName := "cats-tagless-fs2",
@@ -81,13 +76,11 @@ lazy val fs2 = crossProject(JVMPlatform, JSPlatform, NativePlatform)
 
 lazy val lawsJVM = laws.jvm
 lazy val lawsJS = laws.js
-lazy val lawsNative = laws.native
-lazy val laws = crossProject(JVMPlatform, JSPlatform, NativePlatform)
+lazy val laws = crossProject(JVMPlatform, JSPlatform)
   .crossType(CrossType.Pure)
   .dependsOn(core)
   .enablePlugins(AutomateHeaderPlugin)
   .jsSettings(commonJsSettings)
-  .nativeSettings(commonNativeSettings)
   .settings(rootSettings)
   .settings(
     moduleName := "cats-tagless-laws",
@@ -101,14 +94,12 @@ lazy val laws = crossProject(JVMPlatform, JSPlatform, NativePlatform)
 
 lazy val macrosJVM = macros.jvm
 lazy val macrosJS = macros.js
-lazy val macrosNative = macros.native
-lazy val macros = crossProject(JVMPlatform, JSPlatform, NativePlatform)
+lazy val macros = crossProject(JVMPlatform, JSPlatform)
   .crossType(CrossType.Pure)
   .dependsOn(core)
   .aggregate(core)
   .enablePlugins(AutomateHeaderPlugin)
   .jsSettings(commonJsSettings)
-  .nativeSettings(commonNativeSettings)
   .settings(rootSettings, macroSettings)
   .settings(
     moduleName := "cats-tagless-macros",
@@ -122,14 +113,12 @@ lazy val macros = crossProject(JVMPlatform, JSPlatform, NativePlatform)
 
 lazy val testsJVM = tests.jvm
 lazy val testsJS = tests.js
-lazy val testsNative = tests.native
-lazy val tests = crossProject(JVMPlatform, JSPlatform, NativePlatform)
+lazy val tests = crossProject(JVMPlatform, JSPlatform)
   .crossType(CrossType.Pure)
   .dependsOn(macros, laws)
   .enablePlugins(AutomateHeaderPlugin, NoPublishPlugin)
   .jsSettings(commonJsSettings)
   .jsSettings(scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule)))
-  .nativeSettings(commonNativeSettings)
   .settings(rootSettings, macroSettings)
   .settings(
     moduleName := "cats-tagless-tests",
@@ -212,10 +201,6 @@ lazy val commonSettings = List(
 lazy val commonJsSettings = List(
   // currently sbt-doctest doesn't work in JS builds
   // https://github.com/tkawachi/sbt-doctest/issues/52
-  doctestGenTests := Nil
-)
-
-lazy val commonNativeSettings = List(
   doctestGenTests := Nil
 )
 
