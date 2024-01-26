@@ -18,7 +18,5 @@ package cats.tagless.derived
 
 import cats.tagless.macros.Derive
 
-import scala.annotation.experimental
-
 trait DerivedFunctorK:
-  @experimental inline def derived[Alg[_[_]]] = Derive.functorK[Alg]
+  inline def derived[Alg[_[_]]] = Derive.functorK[Alg]

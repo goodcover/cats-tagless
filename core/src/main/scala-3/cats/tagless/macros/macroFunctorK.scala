@@ -24,7 +24,7 @@ import scala.annotation.experimental
 import compiletime.asMatchable
 
 object macroFunctorK:
-  @experimental inline def derive[Alg[_[_]]] = ${ functorK[Alg] }
+  inline def derive[Alg[_[_]]] = ${ functorK[Alg] }
 
   @experimental def functorK[Alg[_[_]]: Type](using Quotes): Expr[FunctorK[Alg]] =
     import quotes.reflect.*
