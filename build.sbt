@@ -23,23 +23,6 @@ ThisBuild / mergifyStewardConfig := Some(
     mergeMinors = true
   )
 )
-ThisBuild / githubWorkflowAddedJobs ++= Seq(
-  WorkflowJob(
-    "microsite",
-    "Microsite",
-    githubWorkflowJobSetup.value.toList ::: List(
-      WorkflowStep.Use(
-        UseRef.Public("ruby", "setup-ruby", "v1"),
-        name = Some("Setup Ruby"),
-        params = Map("ruby-version" -> "3.0", "bundler-cache" -> "true")
-      ),
-      WorkflowStep.Run(List("gem install jekyll -v 2.5"), name = Some("Install Jekyll")),
-      WorkflowStep.Sbt(List("docs/makeMicrosite"), name = Some("Build microsite"))
-    ),
-    scalas = List(Scala213),
-    javas = List(Java8)
-  )
-)
 
 val catsVersion = "2.9.0"
 val circeVersion = "0.14.5"
