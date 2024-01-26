@@ -6,7 +6,7 @@ addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheckAll")
 
 val Scala212 = "2.12.18"
 val Scala213 = "2.13.11"
-val Scala3 = "3.3.1"
+val Scala3 = "3.4.0-RC3"
 val Java8 = JavaSpec.temurin("8")
 
 val gitRepo = "git@github.com:typelevel/cats-tagless.git"
@@ -55,6 +55,7 @@ def when[A](condition: Boolean)(values: A*): Seq[A] =
 
 val macroSettings = List(
   scalacOptions ++= when(scalaBinaryVersion.value == "2.13")("-Ymacro-annotations"),
+  scalacOptions ++= when(scalaBinaryVersion.value == "3")("-experimental"),
   libraryDependencies ++= when(scalaBinaryVersion.value.startsWith("2"))("scala-compiler", "scala-reflect")
     .map("org.scala-lang" % _ % scalaVersion.value % Provided),
   libraryDependencies ++= when(scalaBinaryVersion.value == "2.12")(
@@ -221,7 +222,7 @@ lazy val commonSettings = List(
   // sbt-typelevel sets -source:3.0-migration, we'd like to replace it with -source:future
   scalacOptions ~= (_.filterNot(_ == "-source:3.0-migration")),
   scalacOptions ++= (scalaBinaryVersion.value match {
-    case "3" => List("-language:adhocExtensions", "-source:future", "-explain")
+    case "3" => List("-language:adhocExtensions", "-source:future", "-explain", "-experimental")
     case _ => List("-Xsource:3", "-P:kind-projector:underscore-placeholders")
   })
 )
