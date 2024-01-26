@@ -105,7 +105,6 @@ lazy val macros = crossProject(JVMPlatform, JSPlatform)
     moduleName := "cats-tagless-macros",
     scalacOptions ~= (_.filterNot(opt => opt.startsWith("-Wunused") || opt.startsWith("-Ywarn-unused"))),
     libraryDependencies += "org.scalacheck" %%% "scalacheck" % scalaCheckVersion % Test,
-    publish / skip := scalaBinaryVersion.value.startsWith("3"),
     tlMimaPreviousVersions ++= when(scalaBinaryVersion.value.startsWith("2"))("0.14.0").toSet,
     mimaPreviousArtifacts := when(scalaBinaryVersion.value.startsWith("2"))(mimaPreviousArtifacts.value.toSeq*).toSet,
     tlVersionIntroduced := Map("3" -> "0.15.0")
