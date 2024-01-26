@@ -20,6 +20,6 @@ package cats.tagless
 final class Trivial[A] private extends Serializable
 
 object Trivial {
-  private[this] val any = new Trivial[Any]
+  private val any = new Trivial[Any]
   implicit def instance[A]: Trivial[A] = any.asInstanceOf[Trivial[A]]
 }
