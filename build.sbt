@@ -31,7 +31,7 @@ ThisBuild / githubWorkflowAddedJobs ++= Seq(
       WorkflowStep.Use(
         UseRef.Public("ruby", "setup-ruby", "v1"),
         name = Some("Setup Ruby"),
-        params = Map("ruby-version" -> "2.6", "bundler-cache" -> "true")
+        params = Map("ruby-version" -> "2.7", "bundler-cache" -> "true")
       ),
       WorkflowStep.Run(List("gem install jekyll -v 2.5"), name = Some("Install Jekyll")),
       WorkflowStep.Sbt(List("docs/makeMicrosite"), name = Some("Build microsite"))
