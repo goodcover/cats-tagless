@@ -55,7 +55,6 @@ def when[A](condition: Boolean)(values: A*): Seq[A] =
 
 val macroSettings = List(
   scalacOptions ++= when(scalaBinaryVersion.value == "2.13")("-Ymacro-annotations"),
-  scalacOptions ++= when(scalaBinaryVersion.value == "3")("-experimental"),
   libraryDependencies ++= when(scalaBinaryVersion.value.startsWith("2"))("scala-compiler", "scala-reflect")
     .map("org.scala-lang" % _ % scalaVersion.value % Provided),
   libraryDependencies ++= when(scalaBinaryVersion.value == "2.12")(
